@@ -62,10 +62,18 @@ func main() {
 		}
 	}
 
+	errCh := make(chan error)
+	go func() {
+		for err := range errCh {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+		}
+	}()
+
 	poller := githubPoller{
 		repolist: repoList,
 		repos:    make(map[string]time.Time, len(repoList)),
 		minPoll:  minPoll,
+		errCh:    errCh,
 	}
 	poller.poll()
 }

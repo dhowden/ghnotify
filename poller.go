@@ -14,6 +14,7 @@ type githubPoller struct {
 	reset            time.Time
 	minPoll          time.Duration
 
+	errCh    chan error
 	repolist []string
 	repos    map[string]time.Time
 }
@@ -26,7 +27,7 @@ func (g *githubPoller) poll() {
 			for _, repo := range g.repolist {
 				u, err := g.fetchRepoUpdated(repo)
 				if err != nil {
-					fmt.Println(err)
+					g.errCh <- err
 				}
 				g.repos[repo] = u
 			}
