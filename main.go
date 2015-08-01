@@ -28,9 +28,8 @@ var (
 )
 
 type Config struct {
-	Repos    []string `json:"repos"`
-	DataFile string   `json:"data_file"`
-	MinPoll  string   `json:"min_poll",omitempty`
+	Repos   []string `json:"repos"`
+	MinPoll string   `json:"minPoll,omitempty"`
 }
 
 func init() {
