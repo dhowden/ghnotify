@@ -4,7 +4,7 @@ Simple tool which polls the GitHub API to check if repos have been updated (i.e.
 
 ## Requirements
 
-* Go (tested on 1.4.2, should work with 1+).
+* [Go](http://golang.org/dl/) (tested on 1.4.2, should work with 1+).
 
 ## Installation
 
