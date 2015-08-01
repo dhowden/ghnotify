@@ -1,0 +1,4 @@
+{
+    "repos": ["dhowden/raspicam", "textmate/textmate", "dhowden/tag", "dhowden/tchaik"],
+    "minPoll": "5m"
+}
