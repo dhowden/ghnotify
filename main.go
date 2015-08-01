@@ -69,10 +69,16 @@ func main() {
 		}
 	}()
 
+	n := changesNotifier{
+		logNotifier{},
+		make(map[string]time.Time),
+	}
+
 	poller := githubPoller{
 		repolist: repoList,
 		minPoll:  minPoll,
 		errCh:    errCh,
+		notifier: n,
 	}
 	poller.poll()
 }

@@ -16,6 +16,8 @@ type githubPoller struct {
 
 	errCh    chan error
 	repolist []string
+
+	notifier Notifier
 }
 
 func (g *githubPoller) poll() {
@@ -32,7 +34,7 @@ func (g *githubPoller) poll() {
 				repos[repo] = u
 			}
 
-			fmt.Printf("Fetched repo data:\n%+v\n", repos)
+			g.notifier.Notify(repos)
 
 			polls := (g.remaining) / len(g.repolist)
 			r := g.reset.Sub(time.Now())
