@@ -49,3 +49,26 @@ func (d changesNotifier) Notify(repos map[string]time.Time) error {
 	}
 	return d.Notifier.Notify(changes)
 }
+
+// NewMultiNotifier creates a new Notifier which will call Notify on every passed Notifier.
+// NB: if any notifier returns an error, then it will be returned immediately and the remaing
+// notifiers will not be called.
+func NewMultiNotifier(notifiers ...Notifier) Notifier {
+	return multiNotifier{
+		notifiers: notifiers,
+	}
+}
+
+type multiNotifier struct {
+	notifiers []Notifier
+}
+
+func (m multiNotifier) Notify(repos map[string]time.Time) error {
+	for _, n := range m.notifiers {
+		err := n.Notify(repos)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
