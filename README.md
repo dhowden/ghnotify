@@ -1,4 +1,5 @@
 # ghnotify
+[![Build Status](https://travis-ci.org/dhowden/ghnotify.svg?branch=master)](https://travis-ci.org/dhowden/ghnotify)
 
 Simple tool which polls the GitHub API to check if repos have been updated (i.e. commits have been pushed).
 
