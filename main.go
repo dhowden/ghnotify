@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+/*
+ghnotify is a tool which polls the GitHub API to check if repos have been updated (i.e. commits have been pushed).
+*/
 package main
 
 import (
