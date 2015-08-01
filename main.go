@@ -17,7 +17,8 @@ import (
 )
 
 var (
-	configFile string
+	configFile      string
+	slackWebHookURL string
 )
 
 var (
@@ -34,6 +35,7 @@ type Config struct {
 
 func init() {
 	flag.StringVar(&configFile, "config", "config.json", "Config file")
+	flag.StringVar(&slackWebHookURL, "slack-webhook-url", "", "Slack WebHook URL for posting changes to Slack")
 }
 
 func main() {
@@ -76,8 +78,14 @@ func main() {
 		}
 	}()
 
+	var out Notifier
+	out = logNotifier{}
+	if slackWebHookURL != "" {
+		out = NewMultiNotifier(out, slackWebHookNotifier{slackWebHookURL})
+	}
+
 	n := changesNotifier{
-		logNotifier{},
+		out,
 		make(map[string]time.Time),
 	}
 
