@@ -56,7 +56,7 @@ func main() {
 	if config.MinPoll != "" {
 		minPoll, err = time.ParseDuration(config.MinPoll)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "could not parse min_poll")
+			fmt.Fprintf(os.Stderr, "could not parse minPoll")
 			os.Exit(1)
 			return
 		}
