@@ -42,9 +42,9 @@ func (g *githubPoller) poll() {
 					rerun = g.minPoll
 				}
 				timeout = time.After(rerun)
-			} else {
-				timeout = time.After(g.reset.Sub(time.Now()))
+				break
 			}
+			timeout = time.After(g.reset.Sub(time.Now()))
 		}
 	}
 }
