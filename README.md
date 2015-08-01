@@ -18,3 +18,9 @@ This will fetch the code and build the `ghnotify` command line tool and put it i
 Now:
 
     $ ghnotify -config $GOPATH/src/github.com/dhowden/ghnotify/config.json
+
+## Slack Integration
+
+First setup [Incoming WebHooks](https://api.slack.com/incoming-webhooks "Slack Incoming Webhooks") for your Slack account and you will get a URL which can be used to post messages into a Slack channel.  Then:
+
+    $ ghnotify -slack-webhook-url YOUR_URL_HERE
