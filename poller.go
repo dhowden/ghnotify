@@ -34,6 +34,7 @@ func (g *githubPoller) poll() {
 				u, err := g.fetchRepoUpdated(repo)
 				if err != nil {
 					g.errCh <- err
+					break
 				}
 				repos[repo] = u
 			}
