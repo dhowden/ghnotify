@@ -71,7 +71,6 @@ func main() {
 
 	poller := githubPoller{
 		repolist: repoList,
-		repos:    make(map[string]time.Time, len(repoList)),
 		minPoll:  minPoll,
 		errCh:    errCh,
 	}

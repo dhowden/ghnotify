@@ -16,7 +16,6 @@ type githubPoller struct {
 
 	errCh    chan error
 	repolist []string
-	repos    map[string]time.Time
 }
 
 func (g *githubPoller) poll() {
@@ -24,15 +23,16 @@ func (g *githubPoller) poll() {
 	for {
 		select {
 		case <-timeout:
+			repos := make(map[string]time.Time, len(g.repolist))
 			for _, repo := range g.repolist {
 				u, err := g.fetchRepoUpdated(repo)
 				if err != nil {
 					g.errCh <- err
 				}
-				g.repos[repo] = u
+				repos[repo] = u
 			}
 
-			fmt.Printf("Fetched repo data:\n%+v\n", g.repos)
+			fmt.Printf("Fetched repo data:\n%+v\n", repos)
 
 			polls := (g.remaining) / len(g.repolist)
 			r := g.reset.Sub(time.Now())
@@ -42,9 +42,7 @@ func (g *githubPoller) poll() {
 					rerun = g.minPoll
 				}
 				timeout = time.After(rerun)
-				fmt.Printf("Fetched repo data:\n%+v\nPoll delay: %v\n", g.repos, rerun)
 			} else {
-				fmt.Println("None left before next reset!")
 				timeout = time.After(g.reset.Sub(time.Now()))
 			}
 		}
