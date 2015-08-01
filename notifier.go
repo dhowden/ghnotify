@@ -43,5 +43,9 @@ func (d changesNotifier) Notify(repos map[string]time.Time) error {
 			d.last[k] = v
 		}
 	}
+
+	if len(changes) == 0 {
+		return nil
+	}
 	return d.Notifier.Notify(changes)
 }
