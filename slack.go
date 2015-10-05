@@ -23,7 +23,7 @@ func (s slackWebHookNotifier) Notify(repos map[string]time.Time) error {
 	for k := range repos {
 		keys = append(keys, k)
 	}
-	sort.Sort(sort.StringSlice(keys))
+	sort.Strings(keys)
 
 	var lines []string
 	for _, k := range keys {
