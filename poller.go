@@ -6,7 +6,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -104,25 +103,13 @@ func (g *githubPoller) getHeaderInfo(h http.Header) (err error) {
 	return
 }
 
-func getUpdatedAt(data []byte) (result time.Time, err error) {
-	resp := make(map[string]interface{})
-	err = json.Unmarshal(data, &resp)
+func getUpdatedAt(data []byte) (time.Time, error) {
+	resp := struct {
+		UpdatedAt time.Time `json:"updated_at"`
+	}{}
+	err := json.Unmarshal(data, &resp)
 	if err != nil {
-		return
+		return time.Time{}, err
 	}
-
-	u, ok := resp["updated_at"]
-	if !ok {
-		err = fmt.Errorf("`updated_at` not in returned resp")
-		return
-	}
-
-	us, ok := u.(string)
-	if !ok {
-		err = fmt.Errorf("expected `updated_at` to be a string, got %+v", u)
-		return
-	}
-
-	result, err = time.Parse(time.RFC3339, us)
-	return
+	return resp.UpdatedAt, nil
 }
