@@ -69,7 +69,7 @@ func (g *githubPoller) fetchRepoUpdated(repo string) (result time.Time, err erro
 	}
 	defer resp.Body.Close()
 
-	err = g.getHeaderInfo(resp.Header)
+	err = g.updateLimits(resp.Header)
 	if err != nil {
 		return
 	}
@@ -82,7 +82,7 @@ func (g *githubPoller) fetchRepoUpdated(repo string) (result time.Time, err erro
 	return
 }
 
-func (g *githubPoller) getHeaderInfo(h http.Header) (err error) {
+func (g *githubPoller) updateLimits(h http.Header) (err error) {
 	limit, err := strconv.Atoi(h.Get(limitHeaderLimit))
 	if err != nil {
 		return
