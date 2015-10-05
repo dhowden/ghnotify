@@ -77,8 +77,7 @@ func main() {
 		}
 	}()
 
-	var out Notifier
-	out = logNotifier{}
+	var out Notifier = logNotifier{}
 	if slackWebHookURL != "" {
 		out = NewMultiNotifier(out, slackWebHookNotifier{slackWebHookURL})
 	}
