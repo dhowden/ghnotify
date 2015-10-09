@@ -10,7 +10,10 @@ import (
 	"time"
 )
 
+// Notifier is an interface which defines the Notify method.
 type Notifier interface {
+	// Notify takes a map of repo -> updated time.  Returns an error if there
+	// was a problem handling/passing on the notification.
 	Notify(map[string]time.Time) error
 }
 
@@ -29,6 +32,9 @@ func (logNotifier) Notify(repos map[string]time.Time) error {
 	return nil
 }
 
+// changesNotifier is a wrapper for a Notifier which only passes on Notify calls
+// to the underlying Notifier if the repos or updated times have changed since the
+// last call.
 type changesNotifier struct {
 	Notifier
 
