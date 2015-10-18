@@ -14,7 +14,7 @@ import (
 )
 
 type flowDockNotifier struct {
-	Flow_token string
+	FlowToken string
 }
 
 func (f flowDockNotifier) Notify(repos map[string]time.Time) error {
@@ -35,7 +35,7 @@ func (f flowDockNotifier) Notify(repos map[string]time.Time) error {
 	form.Set("event", "comment")
 	form.Set("external_user_name", "ghnotify")
 
-	resp, err := http.Post("https://api.flowdock.com/messages/chat/"+f.Flow_token,
+	resp, err := http.Post("https://api.flowdock.com/messages/chat/"+f.FlowToken,
 		"application/x-www-form-urlencoded",
 		strings.NewReader(form.Encode()),
 	)
