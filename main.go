@@ -19,6 +19,7 @@ import (
 var (
 	configFile      string
 	slackWebHookURL string
+	flowDockToken   string
 )
 
 var (
@@ -35,6 +36,7 @@ type Config struct {
 func init() {
 	flag.StringVar(&configFile, "config", "config.json", "Config file")
 	flag.StringVar(&slackWebHookURL, "slack-webhook-url", "", "Slack WebHook URL for posting changes to Slack")
+	flag.StringVar(&flowDockToken, "flowdock-token", "", "Flow token for posting changes to Flowdock")
 }
 
 func main() {
@@ -80,6 +82,10 @@ func main() {
 	var out Notifier = logNotifier{}
 	if slackWebHookURL != "" {
 		out = NewMultiNotifier(out, slackWebHookNotifier{slackWebHookURL})
+	}
+
+	if flowDockToken != "" {
+		out = NewMultiNotifier(out, flowDockNotifier{flowDockToken})
 	}
 
 	n := changesNotifier{

@@ -24,3 +24,9 @@ Now:
 First setup [Incoming WebHooks](https://api.slack.com/incoming-webhooks "Slack Incoming Webhooks") for your Slack account and you will get a URL which can be used to post messages into a Slack channel.  Then:
 
     $ ghnotify -slack-webhook-url YOUR_URL_HERE
+
+## Flowdock Integration
+
+First retrieve the Flow API token and then:
+
+    $ ghnotify -flowdock-token 90a8b5e69bd9125f40...
